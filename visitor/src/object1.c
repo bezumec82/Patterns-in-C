@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stddef.h>
+#include <assert.h>
 
 /* Declarations check. */
 #include "object1.h"
@@ -36,12 +37,17 @@ static ObjectOps ops = {
 struct SObjType1 *AllocateObjType1(void)
 {
     struct SObjType1 *obj = malloc(sizeof(struct SObjType1));
-    if (NULL == obj)
-        exit(EXIT_FAILURE);
-    else
-        memset(obj, 0x00, sizeof(struct SObjType1));
+    assert(NULL != obj);
+    memset(obj, 0x00, sizeof(struct SObjType1));
 
     return obj;
+}
+
+void FreeObjType1(struct SObjType1 *this)
+{
+    assert(NULL != this);
+    free(this);
+    this = NULL;
 }
 
 void InitObjType1(struct SObjType1 *this, char *data)
@@ -51,6 +57,13 @@ void InitObjType1(struct SObjType1 *this, char *data)
     InitObject(this->object, &ops, this);
     snprintf(this->data, sizeof(this->data), "%s", data);
     printf("Initialized object of type 1\n");
+}
+
+void FiniObjType1(struct SObjType1 *this)
+{
+    memset(this->data, 0x00, sizeof(this->data));
+    FiniObject(this->object);
+    FreeObject(this->object);
 }
 
 Object * ObjType1GetBase(struct SObjType1 *this)

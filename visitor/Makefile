@@ -14,7 +14,7 @@ libabstract.a : lib/visitor.o lib/object.o
 
 tags:
 	rm -rf ./tags
-	ctags -R .
+	ctags -R . --tag-relative=yes
 
 $(TARGET): $(SOURCES)
 	$(CC) $(CFLAGS) -o $@ $^ libabstract.a -Ilib

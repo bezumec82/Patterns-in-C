@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stddef.h>
+#include <assert.h>
 
 #include "object2.h"
 #include "object.h"
@@ -27,12 +28,17 @@ static ObjectOps ops = {
 struct SObjType2 *AllocateObjType2(void)
 {
     struct SObjType2 *obj = malloc(sizeof(struct SObjType2));
-    if (NULL == obj)
-        exit(EXIT_FAILURE);
-    else
-        memset(obj, 0x00, sizeof(struct SObjType2));
+    assert(NULL != obj);
+    memset(obj, 0x00, sizeof(struct SObjType2));
 
     return obj;
+}
+
+void FreeObjType2(struct SObjType2 *this)
+{
+    assert(NULL != this);
+    free(this);
+    this = NULL;
 }
 
 void InitObjType2(struct SObjType2 *this, int val)
@@ -41,6 +47,13 @@ void InitObjType2(struct SObjType2 *this, int val)
     InitObject(this->object, &ops, this);
     this->val = val;
     printf("Initialized object of type 2\n");
+}
+
+void FiniObjType2(struct SObjType2 *this)
+{
+    this->val = 0;
+    FiniObject(this->object);
+    FreeObject(this->object);
 }
 
 Object * ObjType2GetBase(struct SObjType2 *this)

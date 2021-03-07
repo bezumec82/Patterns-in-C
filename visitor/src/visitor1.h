@@ -14,4 +14,10 @@ void InitVisitor1(Visitor1 *this, char *name);
 #include "visitor.h"
 Visitor * Visitor1GetBase(Visitor1 *this);
 
+/* Destructor. */
+void FiniVisitor1(Visitor1 *this);
+
+/* De-allocator. */
+void FreeVisitor1(Visitor1 *this);
+
 #endif /* __VISITOR_1__*/

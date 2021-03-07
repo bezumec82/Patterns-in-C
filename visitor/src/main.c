@@ -30,5 +30,11 @@ int main(int argc, char *argv[])
     Accept(ObjType2GetBase(obj2), Visitor1GetBase(vtr1));
     Accept(ObjType2GetBase(obj2), Visitor2GetBase(vtr2));
 
+    FiniObjType1(obj1);
+    FiniObjType2(obj2);
+
+    FiniVisitor1(vtr1);
+    FiniVisitor2(vtr2);
+
     return EXIT_SUCCESS;
 }

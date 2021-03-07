@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stddef.h>
+#include <assert.h>
 
 #include "visitor.h"
 #include "object.h"
@@ -43,15 +44,27 @@ struct SVisitor * AllocateVisitor(void)
     return visitor;
 }
 
+void FreeVisitor(struct SVisitor *this)
+{
+    assert(NULL != this);
+    free(this);
+    this = NULL;
+}
+
 void InitVisitor(struct SVisitor *this, struct SVisitorOps *ops, void *derived)
 {
-    if(NULL == derived)
-        exit(EXIT_FAILURE);
-    else
-        this->derived = derived;
+    assert(NULL != derived);
+    assert(NULL != ops);
 
-    if(NULL != ops)
-        this->ops = ops;
+    this->derived = derived;
+    this->ops = ops;
+}
+
+void FiniVisitor(struct SVisitor *this)
+{
+    /* Restore default ops. */
+    this->ops = &errorOps;
+    this->derived = NULL;
 }
 
 struct SVisitorOps * VisitorGetOps(struct SVisitor *visitor)

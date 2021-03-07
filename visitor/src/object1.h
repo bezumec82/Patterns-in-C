@@ -14,4 +14,10 @@ void InitObjType1(ObjType1 *this, char *data);
 Object *    ObjType1GetBase (ObjType1 *this);
 char *      ObjType1GetData (ObjType1 *this);
 
+/* Destructor. */
+void FiniObjType1(ObjType1 *this);
+
+/* De-allocator. */
+void FreeObjType1(ObjType1 *this);
+
 #endif /* __OBJECT_1__ */

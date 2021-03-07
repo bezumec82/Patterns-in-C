@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stddef.h>
+#include <assert.h>
 
 /* Inheritance. */
 #include "visitor.h"
@@ -57,12 +58,17 @@ static VisitorOps Visitor1Ops = {
 struct SVisitor1 *AllocateVisitor1(void)
 {
     struct SVisitor1 *visitor = malloc(sizeof(struct SVisitor1));
-    if (NULL == visitor)
-        exit(EXIT_FAILURE);
-    else
-        memset(visitor, 0x00, sizeof(struct SVisitor1));
+    assert(NULL != visitor);
+    memset(visitor, 0x00, sizeof(struct SVisitor1));
 
     return visitor;
+}
+
+void FreeVisitor1(struct SVisitor1 *this)
+{
+    assert(NULL != this);
+    free(this);
+    this = NULL;
 }
 
 void InitVisitor1(struct SVisitor1 *this, char *name)
@@ -71,6 +77,13 @@ void InitVisitor1(struct SVisitor1 *this, char *name)
     InitVisitor(this->visitor, &Visitor1Ops, this);
     snprintf(this->name, sizeof(this->name), "%s", name);
     printf("Initialized visitor of type 1 with name %s\n", this->name);
+}
+
+void FiniVisitor1(struct SVisitor1 *this)
+{
+    memset(this->name, 0x00, sizeof(this->name));
+    FiniVisitor(this->visitor);
+    FreeVisitor(this->visitor);
 }
 
 Visitor * Visitor1GetBase(struct SVisitor1 *this)

@@ -38,4 +38,10 @@ void InitVisitor(Visitor *this, VisitorOps *ops, void *derived);
 VisitorOps *    VisitorGetOps   (Visitor *this);
 void *          VisitorDownCast (Visitor *visitor);
 
+/* Destructor. */
+void FiniVisitor(Visitor *this);
+
+/* De-allocator. */
+void FreeVisitor(Visitor *this);
+
 #endif /* __VISITOR_COMMON__ */

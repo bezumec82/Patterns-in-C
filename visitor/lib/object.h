@@ -26,5 +26,10 @@ void InitObject(Object *this, ObjectOps *ops, void *derived);
 void *  ObjectDownCast  (Object *this);
 void    Accept          (Object *this, Visitor *visitor);
 
+/* Destructor. */
+void FiniObject(Object *this);
+
+/* De-allocator. */
+void FreeObject(Object *this);
 
 #endif /* __OBJECT__ */
