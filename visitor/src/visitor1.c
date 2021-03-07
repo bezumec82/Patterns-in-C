@@ -9,39 +9,43 @@
 /* Signature check. */
 #include "visitor1.h"
 
-/* Visitor knows it's hosts. */
+/* Concrete visitor knows it's hosts. */
 #include "object1.h"
 #include "object2.h"
 
-#define container_of(ptr, type, member) ({                      \
-        const typeof( ((type *)0)->member ) *__mptr = (ptr);    \
-        (type *)( (char *)__mptr - offsetof(type,member) );})
+#define VISITOR_NAME_MAX    16
 
 struct SVisitor1 {
-    Visitor *visitor; /**< base class */
+    Visitor *visitor; /**< Base object. */
     char name[VISITOR_NAME_MAX];
 };
+/* Make upcast work. */
 _Static_assert(offsetof(struct SVisitor1, visitor) == 0,
-              "Wrong structure of visitor object");
+               "Wrong object's structure. Base must be the first member.");
 
-/* All objects has diffrent type of data.
- * All visitors has diffrent type of actions. */
-static void VisitObjectType1(Visitor *base, ObjType1 *obj)
+/* All objects have diffrent type of data.
+ * All visitors have diffrent type of actions. */
+static void VisitObjectType1(Visitor *base, Object *obj)
 {
     printf("Object type 1 visited be visitor type 1\n");
 
-    struct SVisitor1 *visitor = VisitorDownCast(base); 
+    /* !!!ATTENTION!!!
+     * Getting wrong type here is UB. */
+    struct SVisitor1   *visitor = VisitorDownCast(base); 
+    ObjType1           *object  = ObjectDownCast(obj);
+
     printf("%s : Data of object type 1 : %s\n",
-           visitor->name, ObjType1GetData(obj));
+           visitor->name, ObjType1GetData(object));
 }
 
-static void VisitObjectType2(Visitor *base, ObjType2 *obj)
+static void VisitObjectType2(Visitor *base, Object *obj)
 {
     printf("Object type 2 visited be visitor type 1\n");
 
-    struct SVisitor1 *visitor = VisitorDownCast(base); 
+    struct SVisitor1   *visitor = VisitorDownCast(base); 
+    ObjType2           *object  = ObjectDownCast(obj);
     printf("%s : Data of object type 2 : %d\n",
-           visitor->name, ObjType2GetVal(obj));
+           visitor->name, ObjType2GetVal(object));
 }
 
 /* Each type of object has dedicated operation. */

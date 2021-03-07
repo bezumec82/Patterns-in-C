@@ -9,8 +9,8 @@ Visitor2 *AllocateVisitor2(void);
 /* Constructor. */
 void InitVisitor2(Visitor2 *this, int id);
 
-#include "visitor.h"
 /* Getters/Setters. */
+#include "visitor.h"
 Visitor * Visitor2GetBase(Visitor2 *this);
 
 #endif /* __VISITOR_2__*/

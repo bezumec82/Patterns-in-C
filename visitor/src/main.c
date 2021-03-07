@@ -1,12 +1,11 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "object1.h"
 #include "object2.h"
 
 #include "visitor1.h"
 #include "visitor2.h"
-
-#include "visitor.h"
 
 int main(int argc, char *argv[])
 {
@@ -25,9 +24,11 @@ int main(int argc, char *argv[])
     InitVisitor2(vtr2, 108);
 
     printf("Start visiting objects :\n");
-    ObjType1Accept(obj1, Visitor1GetBase(vtr1));
-    ObjType1Accept(obj1, Visitor2GetBase(vtr2));
+    Accept(UPCAST_OBJECT(obj1), UPCAST_VISITOR(vtr1));
+    Accept(UPCAST_OBJECT(obj1), UPCAST_VISITOR(vtr2));
 
-    ObjType2Accept(obj2, Visitor1GetBase(vtr1));
-    ObjType2Accept(obj2, Visitor2GetBase(vtr2));
+    Accept(ObjType2GetBase(obj2), Visitor1GetBase(vtr1));
+    Accept(ObjType2GetBase(obj2), Visitor2GetBase(vtr2));
+
+    return EXIT_SUCCESS;
 }

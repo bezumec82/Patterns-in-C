@@ -4,21 +4,22 @@
 #include <stddef.h>
 
 #include "visitor.h"
+#include "object.h"
 
-struct SVisitorOps;
 struct SVisitor {
     struct SVisitorOps *ops;
     void               *derived;
 };
 
 /* Error porn. */
-static void ErrorOp1(struct SVisitor *this, ObjType1 *obj)
+/* This is what happend if derived object not override methods. */
+static void ErrorOp1(struct SVisitor *visitor, Object *object)
 {
     printf("ERROR : Usage of not constructed visitor\n");
     exit(EXIT_FAILURE);
 }
 
-static void ErrorOp2(struct SVisitor *this, ObjType2 *obj)
+static void ErrorOp2(struct SVisitor *visitor, Object *object)
 {
     printf("ERROR : Usage of not constructed visitor\n");
     exit(EXIT_FAILURE);

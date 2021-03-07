@@ -1,7 +1,4 @@
-# tags
-TAGS
-!TAGS/
-tags
-!tags/
-
-*.out
+**/tags
+**/*.o
+**/*.out
+**/*.a

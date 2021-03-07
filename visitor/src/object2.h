@@ -10,9 +10,8 @@ ObjType2* AllocateObjType2(void);
 void InitObjType2(ObjType2 *this, int);
 
 /* Public methods. */
-int ObjType2GetVal(ObjType2 *this);
-
-#include "visitor.h"
-void ObjType2Accept(ObjType2 *this, Visitor* visitor);
+#include "object.h"
+Object *    ObjType2GetBase (ObjType2 *this);
+int         ObjType2GetVal  (ObjType2 *this);
 
 #endif /* __OBJECT_2__ */
