@@ -43,13 +43,6 @@ struct SObjType1 *AllocateObjType1(void)
     return obj;
 }
 
-void FreeObjType1(struct SObjType1 *this)
-{
-    assert(NULL != this);
-    free(this);
-    this = NULL;
-}
-
 void InitObjType1(struct SObjType1 *this, char *data)
 {
     this->object = AllocateObject();
@@ -61,9 +54,16 @@ void InitObjType1(struct SObjType1 *this, char *data)
 
 void FiniObjType1(struct SObjType1 *this)
 {
-    memset(this->data, 0x00, sizeof(this->data));
     FiniObject(this->object);
     FreeObject(this->object);
+    memset(this, 0x00, sizeof(struct SObjType1));
+}
+
+void FreeObjType1(struct SObjType1 *this)
+{
+    assert(NULL != this);
+    free(this);
+    this = NULL;
 }
 
 Object * ObjType1GetBase(struct SObjType1 *this)

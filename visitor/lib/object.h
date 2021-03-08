@@ -6,8 +6,7 @@
 
 typedef struct SObject Object;
 
-/* Pointer to the base type is the first 
- * member of derived object.
+/* Pointer to the base type is the first member of derived object.
  * This is how to get it not knowing object's implementation */
 #define UPCAST_OBJECT(derived) (*((Object **)(derived)))
 

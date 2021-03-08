@@ -25,7 +25,7 @@ static void VisitObjectType1(Visitor *base, Object *obj)
 {
     printf("Object type 1 visited by visitor type 2\n");
 
-    struct SVisitor2   *visitor = VisitorDownCast(base); 
+    struct SVisitor2   *visitor = VisitorDownCast(base);
     printf("Visitor ID %i : Data of object type 2 : %s\n",
            visitor->id, ObjType1GetData(ObjectDownCast(obj)));
 }
@@ -34,7 +34,7 @@ static void VisitObjectType2(Visitor *base, Object *obj)
 {
     printf("Object type 2 visited be visitor type 2\n");
 
-    struct SVisitor2 *visitor = VisitorDownCast(base); 
+    struct SVisitor2 *visitor = VisitorDownCast(base);
     printf("Visitor ID %i : Data of object type 2 : %d\n",
            visitor->id, ObjType2GetVal(ObjectDownCast(obj)));
 }

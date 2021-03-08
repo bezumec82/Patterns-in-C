@@ -14,8 +14,8 @@ typedef struct SVisitor Visitor;
 
 /* Visitor abstract interface. */
 typedef struct SVisitorOps {
-    /* Each new type of object will receive dedicated 
-     * functrion pointer here. 
+    /* Each new type of object will receive dedicated
+     * function pointer here.
      * But interface visitor knows only about interface object,
      * not about concrete objects. */
     void (*visitObjType1)(Visitor* , Object* );
